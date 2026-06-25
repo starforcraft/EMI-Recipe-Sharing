@@ -21,9 +21,6 @@
     "client": [
       "com.ultramega.emirecipesharing.fabric.ClientModInitializerImpl"
     ],
-    "emi": [
-      "com.ultramega.emirecipesharing.EmiRecipeSharingPlugin"
-    ],
     "modmenu": [
       "com.ultramega.emirecipesharing.fabric.ModMenuApiImpl"
     ]

@@ -1,6 +1,5 @@
 package com.ultramega.emirecipesharing.client;
 
-import com.ultramega.emirecipesharing.Constants;
 import com.ultramega.emirecipesharing.network.ShareRecipePacket;
 import com.ultramega.emirecipesharing.platform.Services;
 import com.ultramega.emirecipesharing.recipes.RecipeChatComponentFactory;
@@ -37,24 +36,14 @@ public final class ClientRecipeShareManager {
             }
 
             final EmiRecipe recipe = EmiApi.getRecipeManager().getRecipe(payload.recipeId());
-            if (recipe == null) { //TODO: remove warn
-                Constants.LOG.warn("Received shared EMI recipe {}, but it is not known on this client", payload.recipeId());
-                return;
-            }
-            if (!recipe.getCategory().getId().equals(payload.categoryId())) {
-                Constants.LOG.warn("Received shared EMI recipe {} in category {}, but local category is {}",
-                    payload.recipeId(),
-                    payload.categoryId(),
-                    recipe.getCategory().getId()
-                );
+            if (recipe == null || !recipe.getCategory().getId().equals(payload.categoryId())) {
                 return;
             }
 
             final UUID id = UUID.randomUUID();
-            DRAWABLES.put(id, new SharedRecipeDrawable(recipe, RecipePreview.create(recipe)));
+            DRAWABLES.put(id, new SharedRecipeDrawable(recipe, new RecipePreview(recipe)));
             player.sendSystemMessage(RecipeChatComponentFactory.makeSharedRecipeMessage(Component.literal(payload.sharerName()), id));
         });
-
     }
 
     @Nullable

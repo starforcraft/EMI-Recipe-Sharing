@@ -8,6 +8,7 @@
     "InvokerChatComponent"
   ],
   "client": [
-    "ChatScreenMixin"
+    "ChatScreenMixin",
+    "RecipeDisplayMixin"
   ]
 }

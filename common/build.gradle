@@ -18,7 +18,7 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:0.3.5"
     annotationProcessor "io.github.llamalad7:mixinextras-common:0.3.5"
 
-    compileOnly "dev.emi:emi-xplat-mojmap:${emi_version}:api"
+    compileOnly "dev.emi:emi-xplat-mojmap:${emi_version}"
 }
 
 configurations {
@@ -32,26 +32,14 @@ configurations {
     }
 }
 
+configurations.configureEach { cfg ->
+    if (cfg.canBeConsumed) {
+        cfg.outgoing.capability("${project.group}:${project.name}:${project.version}")
+        cfg.outgoing.capability("${project.group}:${mod_id}:${project.version}")
+    }
+}
+
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
     commonResources sourceSets.main.resources.sourceDirectories.singleFile
-}
-
-// Implement mcgradleconventions loader attribute
-def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
-['apiElements', 'runtimeElements', 'sourcesElements'].each { variant ->
-    configurations.named("$variant") {
-        attributes {
-            attribute(loaderAttribute, 'common')
-        }
-    }
-}
-sourceSets.configureEach {
-    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant->
-        configurations.named("$variant") {
-            attributes {
-                attribute(loaderAttribute, 'common')
-            }
-        }
-    }
 }

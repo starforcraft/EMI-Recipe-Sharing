@@ -1,5 +1,5 @@
 {
-  "tooltip.emirecipesharing.share" : "Share this recipe.",
+  "tooltip.emirecipesharing.share" : "Share this recipe",
   "misc.emirecipesharing.shared_recipe": "%s shared a recipe: %s",
   "misc.emirecipesharing.unknown": "Unknown",
   "misc.emirecipesharing.share_cooldown": "Please wait %s second(s) before sharing another recipe.",

@@ -23,18 +23,18 @@ public final class ClientChatRecipeInteraction {
     }
 
     @Nullable
-    public static UUID findRecipeAt(final double mouseX, final double mouseY) {
+    public static Entry findEntryAt(final double mouseX, final double mouseY) {
         for (int i = ENTRIES.size() - 1; i >= 0; i--) {
             final Entry entry = ENTRIES.get(i);
             final Rect2i rect = entry.rect();
             if (mouseX >= rect.getX() && mouseX < rect.getX() + rect.getWidth()
                 && mouseY >= rect.getY() && mouseY < rect.getY() + rect.getHeight()) {
-                return entry.recipeId();
+                return entry;
             }
         }
         return null;
     }
 
-    private record Entry(GuiMessage message, UUID recipeId, Rect2i rect) {
+    public record Entry(GuiMessage message, UUID recipeId, Rect2i rect) {
     }
 }
