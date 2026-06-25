@@ -1,0 +1,7 @@
+@ParametersAreNonnullByDefault
+@FieldsAndMethodsAreNonnullByDefault
+package com.ultramega.emirecipesharing.neoforge.mixin;
+
+import com.ultramega.emirecipesharing.FieldsAndMethodsAreNonnullByDefault;
+
+import javax.annotation.ParametersAreNonnullByDefault;

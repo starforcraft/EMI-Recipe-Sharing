@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {
+    "sources": "${mod_sources}",
+    "issues": "${mod_issue_tracker}"
+  },
+  "icon": "logo.png",
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.ultramega.emirecipesharing.fabric.ModInitializerImpl"
+    ],
+    "client": [
+      "com.ultramega.emirecipesharing.fabric.ClientModInitializerImpl"
+    ],
+    "emi": [
+      "com.ultramega.emirecipesharing.EmiRecipeSharingPlugin"
+    ],
+    "modmenu": [
+      "com.ultramega.emirecipesharing.fabric.ModMenuApiImpl"
+    ]
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/WpUmcmUayN"
+      },
+      "parent": "emi"
+    }
+  },
+  "mixins": [
+    "emirecipesharing.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "emi": ">=${emi_version_min}",
+    "java": ">=${java_version}"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}
