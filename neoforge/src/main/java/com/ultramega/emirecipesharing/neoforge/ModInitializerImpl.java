@@ -35,8 +35,8 @@ public class ModInitializerImpl {
             ShareRecipePacket.TYPE,
             ShareRecipePacket.STREAM_CODEC,
             new DirectionalPayloadHandler<>(
-                (packet, ctx) -> ShareRecipePacket.handleServer(packet, ctx.player(), null),
-                (packet, ctx) -> ShareRecipePacket.handleClient(packet, ctx::player)
+                (packet, ctx) -> ShareRecipePacket.handleClient(packet, ctx::player),
+                (packet, ctx) -> ShareRecipePacket.handleServer(packet, ctx.player(), null)
             )
         );
     }
