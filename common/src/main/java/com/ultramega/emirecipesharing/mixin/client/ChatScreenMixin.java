@@ -1,4 +1,4 @@
-package com.ultramega.emirecipesharing.mixin;
+package com.ultramega.emirecipesharing.mixin.client;
 
 import com.ultramega.emirecipesharing.client.ClientChatRecipeInteraction;
 import com.ultramega.emirecipesharing.client.ClientChatRecipeInteraction.Entry;

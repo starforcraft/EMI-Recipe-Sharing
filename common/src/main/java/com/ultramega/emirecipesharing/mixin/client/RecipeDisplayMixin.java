@@ -1,4 +1,4 @@
-package com.ultramega.emirecipesharing.mixin;
+package com.ultramega.emirecipesharing.mixin.client;
 
 import com.ultramega.emirecipesharing.recipes.ShareRecipeWidget;
 

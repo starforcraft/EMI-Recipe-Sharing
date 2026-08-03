@@ -105,9 +105,14 @@ public final class ClientDrawRecipeInChat {
         final int clipLeft = -4;
         final int clipRight = ((InvokerChatComponent) mc.gui.getChat()).emirs$getWidth() + 4;
 
+        graphics.flush();
         graphics.enableScissor(clipLeft, chatTop, clipRight, chatBottom);
-        preview.render(graphics, x, y, localMouseX, localMouseY);
-        graphics.disableScissor();
+        try {
+            preview.render(graphics, x, y, localMouseX, localMouseY);
+        } finally {
+            graphics.flush();
+            graphics.disableScissor();
+        }
 
         if (isChatFocused) {
             final Entry entry = ClientChatRecipeInteraction.findEntryAt(localMouseX, localMouseY);
