@@ -27,10 +27,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ChatComponent.class)
+@Mixin(value = ChatComponent.class, priority = 1100)
 public abstract class ChatComponentMixin implements RecipeChatLookup {
     @Unique
     private final Map<GuiMessage.Line, GuiMessage> emirs$messageByLine = new IdentityHashMap<>();
@@ -77,22 +78,17 @@ public abstract class ChatComponentMixin implements RecipeChatLookup {
         ClientDrawRecipeInChat.endFrame();
     }
 
-    @Redirect(
+    @ModifyArg(
         method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIIZ)V",
         at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)I")
+            target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)I"),
+        index = 3
     )
-    private int emirs$drawRecipes(final GuiGraphics guiGraphics,
-                                 final Font font,
-                                 final FormattedCharSequence text,
-                                 final int x,
-                                 final int textTop,
-                                 final int color,
-                                 final @Local GuiMessage.Line line,
-                                 final @Share("opacity") LocalFloatRef opacityRef) {
-        opacityRef.set((((color >> 24) + 256) % 256) / 255f);
-        ClientDrawRecipeInChat.renderRecipeForLine(line, textTop, opacityRef.get());
-        return guiGraphics.drawString(font, text, x, textTop, color);
+    private int emirs$drawRecipes(final int textTop,
+                                  final @Local GuiMessage.Line line) {
+        // ClientDrawRecipeInChat currently ignores opacity
+        ClientDrawRecipeInChat.renderRecipeForLine(line, textTop, 1.0f);
+        return textTop;
     }
 
     @Inject(method = "addMessageToDisplayQueue", at = @At("HEAD"))
