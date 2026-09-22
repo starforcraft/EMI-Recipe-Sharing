@@ -39,6 +39,10 @@ public class RecipeDisplayMixin {
 
     @Inject(method = "<init>(Ldev/emi/emi/api/recipe/EmiRecipe;)V", at = @At("TAIL"), remap = false)
     private void emirs$init(final EmiRecipe recipe, final CallbackInfo ci) {
+        if (recipe.getId() == null) {
+            return;
+        }
+
         final int existingColumns = (this.rightButtons.size() + this.rows - 1) / this.rows;
 
         // Reserve one additional right-side column for the share button
@@ -48,7 +52,7 @@ public class RecipeDisplayMixin {
     @Inject(method = "addButtons", at = @At("TAIL"), remap = false)
     private void emirs$addButtons(final WidgetGroup widgets, final List<?> types, final int x, final int xOff, final CallbackInfo ci) {
         // Only inject on the right side
-        if (xOff != BUTTON_SIZE) {
+        if (xOff != BUTTON_SIZE || this.recipe.getId() == null) {
             return;
         }
 
